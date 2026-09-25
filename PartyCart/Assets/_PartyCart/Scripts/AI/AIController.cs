@@ -7,7 +7,7 @@ public class AIController : MonoBehaviour
 
     [Header("Waypoint")]
     public Waypoint currentWaypoint;
-    public float reachDistance = 3f;
+    public float waypointReachDistance = 3f;
 
     [Header("Driving")]
     public float targetSpeed = 18f;

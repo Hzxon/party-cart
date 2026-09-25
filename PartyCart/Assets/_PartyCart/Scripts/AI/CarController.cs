@@ -34,7 +34,7 @@ public class CarController : MonoBehaviour
         frontRight.brakeTorque = brake * breakForce;
     }
 
-    public void GetSpeed() {
+    public float GetSpeed() {
         return rb.linearVelocity.magnitude;
     }
 }
