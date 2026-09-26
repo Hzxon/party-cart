@@ -6,119 +6,382 @@ public class AIController : MonoBehaviour
 {
     private CarController car;
     private RaceProgressTracker progress;
-    private Waypoint currentWaypoint;
 
-    [Header("Driving (base value, tiap AI akan sedikit acak dari sini)")]
-    public float baseTargetSpeed = 18f;
-    public float steeringSensitivity = 10f;
+    private enum AIState
+    {
+        Driving,
+        Recovering
+    }
 
-    [Header("AI Personality")]
-    [Tooltip("Rentang variasi kecepatan tiap AI, biar pack-nya nyebar (gak barengan kayak kereta)")]
-    public float speedVariance = 3f;
-    [Tooltip("Peluang AI 'sedikit salah' pas belok, biar keliatan manusiawi")]
-    [Range(0f, 0.1f)] public float steeringNoiseChance = 0.03f;
-    public float steeringNoiseAmount = 0.15f;
+    private AIState state = AIState.Driving;
 
-    [Header("Cornering (biar AI ngerem dikit sebelum tikungan tajam)")]
-    [Tooltip("Sudut (derajat) antara segmen sekarang & berikutnya yang dianggap 'tikungan tajam penuh'")]
+    private Waypoint targetWaypoint;
+
+    [Header("Driving")]
+    public float baseTargetSpeed = 16f;
+    public float speedVariance = 1.5f;
+    public float lookAheadDistance = 6f;
+
+    [Header("Steering")]
+    public float steeringSensitivity = 1f;
+    public float maxSteeringAtHighSpeed = 0.55f;
+
+    [Header("Corner Speed")]
     public float corneringSlowdownAngle = 40f;
-    [Tooltip("Fraksi minimum dari target speed pas di tikungan paling tajam (0.5 = setengah speed)")]
-    [Range(0.1f, 1f)] public float corneringMinSpeedFactor = 0.5f;
+    public float minimumCornerSpeedFactor = 0.35f;
 
-    [Header("Rubber Banding")]
-    public bool useRubberBanding = true;
-    [Tooltip("Jarak progress (dalam satuan waypoint) sebelum efek rubber-band mulai berasa")]
-    public float rubberBandRange = 15f;
-    [Tooltip("Maksimal tambahan/pengurangan speed dari rubber-band")]
-    public float rubberBandMaxBoost = 6f;
+    [Header("Recovery")]
+    public LayerMask obstacleMask;
+    public float sensorDistance = 1.8f;
+    public float sensorOffset = 0.45f;
+    public float stuckSpeedThreshold = 1f;
+    public float stuckTime = 0.7f;
+    public float reverseDuration = 1.1f;
+    public float reverseThrottle = -0.6f;
 
     private float personalTargetSpeed;
+    private float stuckTimer;
+    private float recoveryTimer;
+    private float reverseSteering;
 
-    private void Awake()
+    private bool leftBlocked;
+    private bool centerBlocked;
+    private bool rightBlocked;
+
+    void Awake()
     {
         car = GetComponent<CarController>();
         progress = GetComponent<RaceProgressTracker>();
 
-        // tiap AI punya "karakter" kecepatan sendiri
-        personalTargetSpeed = baseTargetSpeed + Random.Range(-speedVariance, speedVariance);
+        personalTargetSpeed =
+            baseTargetSpeed + Random.Range(-speedVariance, speedVariance);
     }
 
     void FixedUpdate()
     {
         if (WaypointManager.Instance == null) return;
 
-        currentWaypoint = WaypointManager.Instance.GetWaypoint(progress.currentWaypointIndex);
-        if (currentWaypoint == null) return;
+        switch (state)
+        {
+            case AIState.Driving:
+                targetWaypoint = GetLookAheadWaypoint();
+                DetectObstacle();
+                Drive();
+                break;
 
-        DriveToWaypoint();
+            case AIState.Recovering:
+                Recover();
+                break;
+        }
     }
 
-    void DriveToWaypoint()
+    // =====================================================
+    // LOOK AHEAD WAYPOINT
+    // =====================================================
+
+    Waypoint GetLookAheadWaypoint()
     {
-        Vector3 localTarget = transform.InverseTransformPoint(currentWaypoint.transform.position);
+        int index = progress.currentWaypointIndex;
 
-        // Pakai sudut (atan2), bukan x/magnitude -> tetap stabil walau waypoint
-        // agak di belakang/samping mobil
-        float angle = Mathf.Atan2(localTarget.x, localTarget.z) * Mathf.Rad2Deg;
-        float steering = Mathf.Clamp(angle / 45f, -1f, 1f) * steeringSensitivity;
-        steering = Mathf.Clamp(steering, -1f, 1f);
+        Vector3 lastPosition = transform.position;
+        float travelled = 0f;
 
-        // sedikit "human error" biar AI gak kelihatan robotic/sempurna
-        if (Random.value < steeringNoiseChance)
+        Waypoint selected =
+            WaypointManager.Instance.GetWaypoint(index);
+
+        while (travelled < lookAheadDistance)
         {
-            steering += Random.Range(-steeringNoiseAmount, steeringNoiseAmount);
-            steering = Mathf.Clamp(steering, -1f, 1f);
+            Waypoint wp =
+                WaypointManager.Instance.GetWaypoint(index);
+
+            if (wp == null) break;
+
+            travelled += Vector3.Distance(
+                lastPosition,
+                wp.transform.position
+            );
+
+            lastPosition = wp.transform.position;
+            selected = wp;
+
+            index =
+                (index + 1) %
+                WaypointManager.Instance.waypoints.Count;
         }
 
-        float effectiveTargetSpeed = GetRubberBandedTargetSpeed() * GetCorneringSpeedFactor();
+        return selected;
+    }
 
-        float speed = car.GetSpeed();
-        float throttle = (speed < effectiveTargetSpeed) ? 1f : 0f;
-        float brake = (speed > effectiveTargetSpeed + 2f) ? 1f : 0f;
+    // =====================================================
+    // DRIVING
+    // =====================================================
+
+    void Drive()
+    {
+        if (targetWaypoint == null) return;
+
+        Vector3 localTarget =
+            transform.InverseTransformPoint(targetWaypoint.transform.position);
+
+        float angle =
+            Mathf.Atan2(localTarget.x, localTarget.z) * Mathf.Rad2Deg;
+
+        float steering =
+            Mathf.Clamp(angle / 35f, -1f, 1f);
+
+        // Kurangi steering kalau speed tinggi.
+        float speed = car.GetSpeed(); // m/s
+
+        float steeringLimit =
+            Mathf.Lerp(
+                1f,
+                maxSteeringAtHighSpeed,
+                Mathf.Clamp01(speed / 18f)
+            );
+
+        steering *= steeringSensitivity;
+        steering *= steeringLimit;
+        steering = Mathf.Clamp(steering, -1f, 1f);
+
+        float targetSpeed = CalculateTargetSpeed(angle);
+
+        float throttle = 0f;
+        float brake = 0f;
+
+        if (speed < targetSpeed)
+        {
+            throttle =
+                Mathf.Clamp01((targetSpeed - speed) / 3f);
+        }
+        else
+        {
+            brake =
+                Mathf.Clamp01((speed - targetSpeed) / 2f);
+        }
+
+        // ========= ANTI SLIDE =========
+
+        float steeringAmount = Mathf.Abs(steering);
+
+        // Belok tajam -> kurangi gas.
+        throttle *= Mathf.Lerp(1f, 0.25f, steeringAmount);
+
+        // Belok sangat tajam + masih cepat -> rem sedikit.
+        if (steeringAmount > 0.55f && speed > targetSpeed)
+        {
+            brake = Mathf.Max(brake, steeringAmount * 0.7f);
+        }
 
         car.Move(steering, throttle, brake);
     }
 
-    // Cek seberapa tajam tikungan DI DEPAN (bukan yang lagi dilalui sekarang),
-    // dengan bandingin arah segmen sekarang vs segmen berikutnya.
-    // Ini bikin AI mulai ngurangin speed SEBELUM nyampe apex, bukan pas udah kelewat.
-    float GetCorneringSpeedFactor()
+    // =====================================================
+    // TARGET SPEED
+    // =====================================================
+
+    float CalculateTargetSpeed(float steeringAngle)
     {
-        if (WaypointManager.Instance == null || currentWaypoint == null) return 1f;
+        int current = progress.currentWaypointIndex;
 
-        int nextIndex = (progress.currentWaypointIndex + 1) % WaypointManager.Instance.waypoints.Count;
-        Waypoint nextWaypoint = WaypointManager.Instance.GetWaypoint(nextIndex);
-        if (nextWaypoint == null) return 1f;
+        Waypoint wp0 =
+            WaypointManager.Instance.GetWaypoint(current);
 
-        Vector3 dirToCurrent = (currentWaypoint.transform.position - transform.position);
-        Vector3 dirCurrentToNext = (nextWaypoint.transform.position - currentWaypoint.transform.position);
+        Waypoint wp1 =
+            WaypointManager.Instance.GetWaypoint(
+                (current + 1) %
+                WaypointManager.Instance.waypoints.Count
+            );
 
-        if (dirToCurrent.sqrMagnitude < 0.001f || dirCurrentToNext.sqrMagnitude < 0.001f) return 1f;
+        Waypoint wp2 =
+            WaypointManager.Instance.GetWaypoint(
+                (current + 2) %
+                WaypointManager.Instance.waypoints.Count
+            );
 
-        float cornerAngle = Vector3.Angle(dirToCurrent.normalized, dirCurrentToNext.normalized);
-        float t = Mathf.Clamp01(cornerAngle / corneringSlowdownAngle);
-
-        return Mathf.Lerp(1f, corneringMinSpeedFactor, t);
-    }
-
-    float GetRubberBandedTargetSpeed()
-    {
-        if (!useRubberBanding || RaceManager.Instance == null)
+        if (wp0 == null || wp1 == null || wp2 == null)
             return personalTargetSpeed;
 
-        float leaderProgress = RaceManager.Instance.GetLeaderProgress();
-        float diff = leaderProgress - progress.GetProgress(); // positif = AI ini ketinggalan
+        Vector3 dir1 =
+            (wp1.transform.position - wp0.transform.position).normalized;
 
-        float t = Mathf.Clamp(diff / rubberBandRange, -1f, 1f);
-        float boost = t * rubberBandMaxBoost; // ketinggalan -> boost positif, di depan -> boost negatif
+        Vector3 dir2 =
+            (wp2.transform.position - wp1.transform.position).normalized;
 
-        return personalTargetSpeed + boost;
+        float cornerAngle =
+            Vector3.Angle(dir1, dir2);
+
+        float factor = 1f;
+
+        if (cornerAngle > 70f)
+            factor = 0.35f;
+        else if (cornerAngle > 50f)
+            factor = 0.50f;
+        else if (cornerAngle > 30f)
+            factor = 0.70f;
+        else if (cornerAngle > 15f)
+            factor = 0.85f;
+
+        // Kalau mobil masih menghadap jauh dari target, anggap tikungan tajam.
+        float steeringFactor =
+            Mathf.InverseLerp(10f, 45f, Mathf.Abs(steeringAngle));
+
+        factor *= Mathf.Lerp(1f, 0.55f, steeringFactor);
+
+        return personalTargetSpeed * factor;
     }
 
-    private void OnDrawGizmos()
+    // =====================================================
+    // OBSTACLE DETECTION
+    // =====================================================
+
+    void DetectObstacle()
     {
-        if (currentWaypoint == null) return;
-        Gizmos.color = Color.red;
-        Gizmos.DrawLine(transform.position, currentWaypoint.transform.position);
+        Vector3 origin =
+            transform.position + transform.up * 0.35f;
+
+        Vector3 leftOrigin =
+            origin - transform.right * sensorOffset;
+
+        Vector3 rightOrigin =
+            origin + transform.right * sensorOffset;
+
+        leftBlocked = Physics.Raycast(
+            leftOrigin,
+            transform.forward,
+            sensorDistance,
+            obstacleMask
+        );
+
+        centerBlocked = Physics.Raycast(
+            origin,
+            transform.forward,
+            sensorDistance,
+            obstacleMask
+        );
+
+        rightBlocked = Physics.Raycast(
+            rightOrigin,
+            transform.forward,
+            sensorDistance,
+            obstacleMask
+        );
+
+        bool blocked =
+            leftBlocked || centerBlocked || rightBlocked;
+
+        if (!blocked)
+        {
+            stuckTimer = 0f;
+            return;
+        }
+
+        if (car.GetSpeed() > stuckSpeedThreshold)
+        {
+            stuckTimer = 0f;
+            return;
+        }
+
+        stuckTimer += Time.fixedDeltaTime;
+
+        if (stuckTimer >= stuckTime)
+        {
+            StartRecovery();
+        }
+    }
+
+    // =====================================================
+    // RECOVERY
+    // =====================================================
+
+    void StartRecovery()
+    {
+        state = AIState.Recovering;
+
+        recoveryTimer = reverseDuration;
+        stuckTimer = 0f;
+
+        if (leftBlocked && !rightBlocked)
+            reverseSteering = 1f;
+        else if (rightBlocked && !leftBlocked)
+            reverseSteering = -1f;
+        else
+            reverseSteering = Random.value > 0.5f ? 1f : -1f;
+    }
+
+    void Recover()
+    {
+        recoveryTimer -= Time.fixedDeltaTime;
+
+        car.Move(
+            reverseSteering,
+            reverseThrottle,
+            0f
+        );
+
+        Vector3 origin =
+            transform.position + transform.up * 0.35f;
+
+        bool blocked =
+            Physics.Raycast(
+                origin,
+                transform.forward,
+                sensorDistance,
+                obstacleMask
+            );
+
+        if (!blocked || recoveryTimer <= 0f)
+        {
+            state = AIState.Driving;
+        }
+    }
+
+    // =====================================================
+    // DEBUG GIZMOS
+    // =====================================================
+
+    void OnDrawGizmos()
+    {
+        Vector3 origin =
+            transform.position + transform.up * 0.35f;
+
+        Vector3 leftOrigin =
+            origin - transform.right * sensorOffset;
+
+        Vector3 rightOrigin =
+            origin + transform.right * sensorOffset;
+
+        Gizmos.color = leftBlocked ? Color.red : Color.cyan;
+        Gizmos.DrawLine(
+            leftOrigin,
+            leftOrigin + transform.forward * sensorDistance
+        );
+
+        Gizmos.color = centerBlocked ? Color.red : Color.cyan;
+        Gizmos.DrawLine(
+            origin,
+            origin + transform.forward * sensorDistance
+        );
+
+        Gizmos.color = rightBlocked ? Color.red : Color.cyan;
+        Gizmos.DrawLine(
+            rightOrigin,
+            rightOrigin + transform.forward * sensorDistance
+        );
+
+        if (targetWaypoint != null)
+        {
+            Gizmos.color = Color.green;
+            Gizmos.DrawSphere(targetWaypoint.transform.position, 0.25f);
+            Gizmos.DrawLine(
+                transform.position,
+                targetWaypoint.transform.position
+            );
+        }
+
+        if (state == AIState.Recovering)
+        {
+            Gizmos.color = Color.yellow;
+            Gizmos.DrawWireSphere(transform.position, 1f);
+        }
     }
 }
