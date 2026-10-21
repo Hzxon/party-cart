@@ -1,0 +1,19 @@
+.pit-pass {
+    color: rgb(21,63,71);
+    -unity-font-definition: url("project://database/Assets/TextMesh Pro/Examples & Extras/Fonts/Roboto-Bold.ttf?fileID=12800000&guid=4beb055f07aaff244873dec698d0363e&type=3#Roboto-Bold");
+    -unity-font-style: normal;
+}
+.pit-title {
+    -unity-font-definition: url("project://database/Assets/TextMesh Pro/Examples & Extras/Fonts/Bangers.ttf?fileID=12800000&guid=5dd49b3eacc540408c98eee0de38e0f1&type=3#Bangers");
+    -unity-font-style: normal;
+}
+.pit-wordmark { color: rgb(246,243,231); letter-spacing: 2px; margin: 0; padding: 0; -unity-text-outline-width: 1px; -unity-text-outline-color: rgb(21,63,71); }
+.pit-button { border-width: 3px; border-color: rgb(21,63,71); border-radius: 0; background-color: rgb(246,243,231); color: rgb(21,63,71); margin: 0; padding: 0 20px; font-size: 23px; -unity-font-style: normal; min-height: 80px; }
+.pit-button:hover { background-color: rgb(225,232,215); }
+.pit-button:focus { border-color: rgb(232,108,74); }
+.pit-button:active { translate: 0 3px; }
+.pit-primary { background-color: rgb(233,240,89); }
+.pit-primary:hover { background-color: rgb(245,250,141); }
+.pit-replay { background-color: rgb(232,108,74); color: rgb(246,243,231); }
+.pit-replay:hover { background-color: rgb(245,131,100); }
+.pit-button:disabled { opacity: 0.55; }

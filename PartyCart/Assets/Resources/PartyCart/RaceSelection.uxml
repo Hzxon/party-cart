@@ -1,0 +1,40 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements">
+    <Style src="../../_PartyCart/UI/PitPassTheme.uss" />
+    <Style src="../../_PartyCart/UI/RaceSelection.uss" />
+    <ui:VisualElement name="race-selection" class="race-setup pit-pass">
+        <ui:VisualElement class="setup-rail">
+            <ui:Label text="PARTY CART" class="setup-wordmark pit-wordmark pit-title" />
+            <ui:Label text="PERSIAPAN BALAP" class="setup-subtitle" />
+            <ui:Label name="setup-title" text="PILIH MAP." class="setup-title pit-title" />
+            <ui:VisualElement class="setup-ticket">
+                <ui:VisualElement class="setup-ticket-header"><ui:Label name="setup-ticket-label" text="● TIKET LINTASAN" /><ui:Label name="setup-counter" text="01 / 01" /></ui:VisualElement>
+                <ui:Label name="setup-selected-label" text="MAP TERPILIH" class="setup-selected-label" />
+                <ui:VisualElement class="setup-selection-summary">
+                    <ui:Image name="setup-portrait" class="setup-portrait" />
+                    <ui:VisualElement class="setup-selected-info"><ui:Label name="setup-selected-name" text="HUTAN SAKURA" class="setup-selected-name pit-title" /><ui:Label text="✓  TERPILIH" class="setup-selected-check" /></ui:VisualElement>
+                </ui:VisualElement>
+                <ui:VisualElement name="setup-map-confirmation" class="setup-map-confirmation"><ui:Label text="MAP" /><ui:Label name="setup-confirmed-map" text="HUTAN SAKURA ✓" class="setup-confirmed-map" /></ui:VisualElement>
+                <ui:Label name="setup-status" class="setup-status" />
+                <ui:Button name="setup-continue" text="LANJUT  ↗" class="pit-button pit-primary pit-title setup-continue" />
+            </ui:VisualElement>
+            <ui:Button name="setup-back" text="←  KEMBALI KE MENU" class="setup-back" />
+        </ui:VisualElement>
+        <ui:VisualElement class="setup-content">
+            <ui:VisualElement class="setup-hero">
+                <ui:Image name="setup-preview" class="setup-preview" />
+                <ui:Label name="setup-preview-tag" text="PREVIEW LINTASAN" class="setup-preview-tag" />
+                <ui:VisualElement name="setup-character-heading" class="setup-character-heading"><ui:Label name="setup-character-id" text="PESERTA 01 / PARTY CART" class="setup-eyebrow" /><ui:Label name="setup-character-name" text="POT HEAD" class="setup-character-name pit-title" /></ui:VisualElement>
+                <ui:VisualElement name="setup-map-nameplate" class="setup-map-nameplate"><ui:Label name="setup-map-name" text="HUTAN SAKURA" class="setup-map-name pit-title" /><ui:Label name="setup-map-id" text="MAP 01" /><ui:VisualElement name="setup-route-host" class="setup-route-host" /></ui:VisualElement>
+            </ui:VisualElement>
+            <ui:VisualElement class="setup-catalog">
+                <ui:VisualElement class="setup-catalog-header"><ui:VisualElement class="setup-catalog-caption"><ui:Label name="setup-list-title" text="DAFTAR MAP" /><ui:Label name="setup-page-range" text="01 / 01" /></ui:VisualElement><ui:Button name="setup-see-all" text="LIHAT SEMUA ↗" class="setup-see-all" /></ui:VisualElement>
+                <ui:VisualElement class="setup-choices-row"><ui:Button name="setup-previous-page" text="‹" class="setup-page-button" /><ui:VisualElement name="setup-choices" class="setup-choices" /><ui:Button name="setup-next-page" text="›" class="setup-page-button" /></ui:VisualElement>
+                <ui:VisualElement class="setup-race-stripe" picking-mode="Ignore" />
+            </ui:VisualElement>
+            <ui:VisualElement name="setup-all-overlay" class="setup-overlay">
+                <ui:VisualElement class="setup-overlay-header"><ui:Label name="setup-overlay-title" text="SEMUA MAP" class="pit-title" /><ui:Button name="setup-close-overlay" text="TUTUP ×" class="setup-close-overlay" /></ui:VisualElement>
+                <ui:ScrollView name="setup-all-scroll" class="setup-all-scroll" horizontal-scroller-visibility="Hidden" vertical-scroller-visibility="Auto"><ui:VisualElement name="setup-all-choices" class="setup-all-choices" /></ui:ScrollView>
+            </ui:VisualElement>
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>

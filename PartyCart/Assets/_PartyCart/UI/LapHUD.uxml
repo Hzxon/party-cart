@@ -1,0 +1,11 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements">
+    <Style src="LapHUD.uss" />
+    <ui:VisualElement class="lap-hud">
+        <ui:VisualElement class="lap-panel">
+            <ui:VisualElement class="lap-swipe lap-swipe-back" picking-mode="Ignore" />
+            <ui:VisualElement class="lap-swipe lap-swipe-front" picking-mode="Ignore" />
+            <ui:Label name="lap-caption" text="LAP" class="lap-caption" />
+            <ui:Label name="lap-value" text="1 / 2" class="lap-value" />
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>

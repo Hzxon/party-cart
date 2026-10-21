@@ -1,0 +1,19 @@
+.menu-root { position: absolute; left: 0; right: 0; top: 0; bottom: 0; overflow: hidden; background-color: rgb(21,63,71); }
+.menu-background { position: absolute; left: 24%; right: 0; top: 0; bottom: 0; background-image: url("../../../_PartyCart/UI/MenuRaceBackdrop.jpg"); -unity-background-scale-mode: scale-and-crop; }
+.menu-rail { position: absolute; left: 0; top: 0; bottom: 0; width: 27.4%; background-color: rgb(21,63,71); }
+.menu-wordmark { position: absolute; left: 9%; right: 5%; top: 5.6%; font-size: 78px; white-space: nowrap; }
+.menu-ticket { position: absolute; left: 8.2%; right: 8.2%; bottom: 4.8%; height: 56%; padding: 30px; background-color: rgb(246,243,231); }
+.ticket-eyebrow { flex-direction: row; align-items: center; justify-content: space-between; border-bottom-width: 2px; border-bottom-color: rgb(21,63,71); padding-bottom: 23px; margin-bottom: 27px; }
+.ticket-eyebrow Label { font-size: 17px; margin: 0; padding: 0; letter-spacing: 1px; }
+.ticket-label { color: rgb(21,63,71); }
+.menu-play { height: 123px; font-size: 60px; -unity-text-align: middle-left; padding-left: 28px; }
+.menu-secondary { flex-direction: row; margin-top: 23px; }
+.menu-secondary-button { flex-grow: 1; flex-basis: 0; height: 88px; padding: 0; }
+.menu-shop { margin-right: 18px; }
+.menu-quit { height: 64px; min-height: 55px; background-color: rgba(0,0,0,0); color: rgb(21,63,71); border-width: 0; border-radius: 0; font-size: 21px; margin: 14px 0 17px 0; padding: 0; }
+.menu-quit:hover, .menu-quit:focus { background-color: rgb(225,232,215); }
+.ticket-footer { border-top-width: 2px; border-top-color: rgb(21,63,71); padding-top: 18px; flex-direction: row; align-items: center; justify-content: space-between; margin-top: auto; }
+.menu-status { font-size: 14px; white-space: normal; flex-grow: 1; flex-shrink: 1; margin: 0; padding: 0; }
+.ticket-barcode { font-size: 29px; letter-spacing: -2px; margin: 0 0 0 7px; padding: 0; }
+.car-caption { position: absolute; right: 3%; bottom: 5%; padding: 15px 24px; background-color: rgb(246,243,231); border-width: 3px; border-color: rgb(21,63,71); }
+.car-caption Label { margin: 0; padding: 0; font-size: 20px; letter-spacing: 1px; }

@@ -1,0 +1,695 @@
+{
+    "fileName": "Untitled",
+    "screens": [
+        {
+            "assetName": "Group-7",
+            "rootNodeId": "6:30",
+            "contentHash": "a40db15918724d71",
+            "generated": [
+                "images/img-111w94pdyvkka-437618.png",
+                "Group-7.uss",
+                "Group-7.uxml"
+            ],
+            "tokens": [],
+            "nodes": [
+                {
+                    "figmaNodeId": "6:30",
+                    "cssClass": "",
+                    "styleClass": "",
+                    "doc": "Group-7",
+                    "path": "1",
+                    "props": [
+                        {
+                            "k": "width",
+                            "v": "2018px"
+                        },
+                        {
+                            "k": "height",
+                            "v": "1127px"
+                        }
+                    ]
+                },
+                {
+                    "figmaNodeId": "6:27",
+                    "cssClass": "",
+                    "styleClass": "",
+                    "doc": "Group-7",
+                    "path": "1/1",
+                    "props": [
+                        {
+                            "k": "width",
+                            "v": "2018px"
+                        },
+                        {
+                            "k": "height",
+                            "v": "1127px"
+                        },
+                        {
+                            "k": "position",
+                            "v": "absolute"
+                        },
+                        {
+                            "k": "left",
+                            "v": "0px"
+                        },
+                        {
+                            "k": "top",
+                            "v": "0px"
+                        }
+                    ]
+                },
+                {
+                    "figmaNodeId": "6:25",
+                    "cssClass": "",
+                    "styleClass": "",
+                    "doc": "Group-7",
+                    "path": "1/1/1",
+                    "props": [
+                        {
+                            "k": "width",
+                            "v": "2018px"
+                        },
+                        {
+                            "k": "height",
+                            "v": "1127px"
+                        },
+                        {
+                            "k": "position",
+                            "v": "absolute"
+                        },
+                        {
+                            "k": "left",
+                            "v": "0px"
+                        },
+                        {
+                            "k": "top",
+                            "v": "0px"
+                        }
+                    ]
+                },
+                {
+                    "figmaNodeId": "1:3",
+                    "cssClass": "",
+                    "styleClass": "",
+                    "doc": "Group-7",
+                    "path": "1/1/1/1",
+                    "props": [
+                        {
+                            "k": "width",
+                            "v": "2018px"
+                        },
+                        {
+                            "k": "height",
+                            "v": "1127px"
+                        },
+                        {
+                            "k": "position",
+                            "v": "absolute"
+                        },
+                        {
+                            "k": "left",
+                            "v": "0px"
+                        },
+                        {
+                            "k": "top",
+                            "v": "0px"
+                        },
+                        {
+                            "k": "background-image",
+                            "v": "url(\"project://database/Assets/Figma/Untitled/images/img-111w94pdyvkka-437618.png?fileID=2800000&guid=ff178beaf5a46d8428fdd410cba18f41&type=3#img-111w94pdyvkka-437618\")"
+                        },
+                        {
+                            "k": "-unity-background-scale-mode",
+                            "v": "scale-to-fit"
+                        }
+                    ]
+                }
+            ],
+            "components": [],
+            "states": []
+        },
+        {
+            "assetName": "start",
+            "rootNodeId": "6:45",
+            "contentHash": "5d390998bb6c99df",
+            "generated": [
+                "images/img-x5kr83153xqgp-406360.png",
+                "start.uss",
+                "start.uxml"
+            ],
+            "tokens": [],
+            "nodes": [
+                {
+                    "figmaNodeId": "6:45",
+                    "cssClass": "",
+                    "styleClass": "",
+                    "doc": "start",
+                    "path": "1",
+                    "props": [
+                        {
+                            "k": "width",
+                            "v": "2022px"
+                        },
+                        {
+                            "k": "height",
+                            "v": "1129px"
+                        }
+                    ]
+                },
+                {
+                    "figmaNodeId": "5:3",
+                    "cssClass": "",
+                    "styleClass": "",
+                    "doc": "start",
+                    "path": "1/1",
+                    "props": [
+                        {
+                            "k": "width",
+                            "v": "2022px"
+                        },
+                        {
+                            "k": "height",
+                            "v": "1129px"
+                        },
+                        {
+                            "k": "position",
+                            "v": "absolute"
+                        },
+                        {
+                            "k": "left",
+                            "v": "0px"
+                        },
+                        {
+                            "k": "top",
+                            "v": "0px"
+                        },
+                        {
+                            "k": "background-image",
+                            "v": "url(\"project://database/Assets/Figma/Untitled/images/img-x5kr83153xqgp-406360.png?fileID=2800000&guid=a10da3152639b9b47b5db9d11b7356b4&type=3#img-x5kr83153xqgp-406360\")"
+                        },
+                        {
+                            "k": "-unity-background-scale-mode",
+                            "v": "scale-to-fit"
+                        }
+                    ]
+                },
+                {
+                    "figmaNodeId": "6:3",
+                    "cssClass": "",
+                    "styleClass": "",
+                    "doc": "start",
+                    "path": "1/2",
+                    "props": [
+                        {
+                            "k": "width",
+                            "v": "411px"
+                        },
+                        {
+                            "k": "height",
+                            "v": "76px"
+                        },
+                        {
+                            "k": "border-radius",
+                            "v": "50px"
+                        },
+                        {
+                            "k": "position",
+                            "v": "absolute"
+                        },
+                        {
+                            "k": "left",
+                            "v": "725px"
+                        },
+                        {
+                            "k": "top",
+                            "v": "648px"
+                        }
+                    ]
+                },
+                {
+                    "figmaNodeId": "6:21",
+                    "cssClass": "",
+                    "styleClass": "",
+                    "doc": "start",
+                    "path": "1/3",
+                    "props": [
+                        {
+                            "k": "width",
+                            "v": "258px"
+                        },
+                        {
+                            "k": "height",
+                            "v": "81px"
+                        },
+                        {
+                            "k": "position",
+                            "v": "absolute"
+                        },
+                        {
+                            "k": "left",
+                            "v": "802px"
+                        },
+                        {
+                            "k": "top",
+                            "v": "648px"
+                        }
+                    ]
+                },
+                {
+                    "figmaNodeId": "6:13",
+                    "cssClass": "",
+                    "styleClass": "",
+                    "doc": "start",
+                    "path": "1/3/1",
+                    "props": [
+                        {
+                            "k": "color",
+                            "v": "#FFF"
+                        },
+                        {
+                            "k": "-unity-text-align",
+                            "v": "middle-center"
+                        },
+                        {
+                            "k": "-unity-font-definition",
+                            "v": "url(\"project://database/Assets/Fonts/Outfit/Outfit.ttf?fileID=12800000&guid=ece1c9f32c448584f949b5fad5895d3c&type=3#Outfit\")"
+                        },
+                        {
+                            "k": "font-size",
+                            "v": "64px"
+                        },
+                        {
+                            "k": "-unity-font-style",
+                            "v": "bold"
+                        },
+                        {
+                            "k": "letter-spacing",
+                            "v": "undefined"
+                        },
+                        {
+                            "k": "white-space",
+                            "v": "nowrap"
+                        },
+                        {
+                            "k": "position",
+                            "v": "absolute"
+                        },
+                        {
+                            "k": "left",
+                            "v": "0px"
+                        },
+                        {
+                            "k": "top",
+                            "v": "0px"
+                        }
+                    ]
+                },
+                {
+                    "figmaNodeId": "6:22",
+                    "cssClass": "",
+                    "styleClass": "",
+                    "doc": "start",
+                    "path": "1/4",
+                    "props": [
+                        {
+                            "k": "width",
+                            "v": "411px"
+                        },
+                        {
+                            "k": "height",
+                            "v": "86px"
+                        },
+                        {
+                            "k": "position",
+                            "v": "absolute"
+                        },
+                        {
+                            "k": "left",
+                            "v": "725px"
+                        },
+                        {
+                            "k": "top",
+                            "v": "771px"
+                        }
+                    ]
+                },
+                {
+                    "figmaNodeId": "6:5",
+                    "cssClass": "",
+                    "styleClass": "",
+                    "doc": "start",
+                    "path": "1/4/1",
+                    "props": [
+                        {
+                            "k": "width",
+                            "v": "411px"
+                        },
+                        {
+                            "k": "height",
+                            "v": "76px"
+                        },
+                        {
+                            "k": "border-radius",
+                            "v": "50px"
+                        },
+                        {
+                            "k": "position",
+                            "v": "absolute"
+                        },
+                        {
+                            "k": "left",
+                            "v": "0px"
+                        },
+                        {
+                            "k": "top",
+                            "v": "0px"
+                        }
+                    ]
+                },
+                {
+                    "figmaNodeId": "6:15",
+                    "cssClass": "",
+                    "styleClass": "",
+                    "doc": "start",
+                    "path": "1/4/2",
+                    "props": [
+                        {
+                            "k": "color",
+                            "v": "#FFF"
+                        },
+                        {
+                            "k": "-unity-text-align",
+                            "v": "middle-center"
+                        },
+                        {
+                            "k": "-unity-font-definition",
+                            "v": "url(\"project://database/Assets/Fonts/Outfit/Outfit.ttf?fileID=12800000&guid=ece1c9f32c448584f949b5fad5895d3c&type=3#Outfit\")"
+                        },
+                        {
+                            "k": "font-size",
+                            "v": "64px"
+                        },
+                        {
+                            "k": "-unity-font-style",
+                            "v": "bold"
+                        },
+                        {
+                            "k": "letter-spacing",
+                            "v": "undefined"
+                        },
+                        {
+                            "k": "white-space",
+                            "v": "nowrap"
+                        },
+                        {
+                            "k": "position",
+                            "v": "absolute"
+                        },
+                        {
+                            "k": "left",
+                            "v": "125px"
+                        },
+                        {
+                            "k": "top",
+                            "v": "5px"
+                        }
+                    ]
+                },
+                {
+                    "figmaNodeId": "6:20",
+                    "cssClass": "",
+                    "styleClass": "",
+                    "doc": "start",
+                    "path": "1/5",
+                    "props": [
+                        {
+                            "k": "width",
+                            "v": "411px"
+                        },
+                        {
+                            "k": "height",
+                            "v": "81px"
+                        },
+                        {
+                            "k": "position",
+                            "v": "absolute"
+                        },
+                        {
+                            "k": "left",
+                            "v": "725px"
+                        },
+                        {
+                            "k": "top",
+                            "v": "525px"
+                        }
+                    ]
+                },
+                {
+                    "figmaNodeId": "6:7",
+                    "cssClass": "",
+                    "styleClass": "",
+                    "doc": "start",
+                    "path": "1/5/1",
+                    "props": [
+                        {
+                            "k": "width",
+                            "v": "411px"
+                        },
+                        {
+                            "k": "height",
+                            "v": "76px"
+                        },
+                        {
+                            "k": "border-radius",
+                            "v": "50px"
+                        },
+                        {
+                            "k": "position",
+                            "v": "absolute"
+                        },
+                        {
+                            "k": "left",
+                            "v": "0px"
+                        },
+                        {
+                            "k": "top",
+                            "v": "3px"
+                        }
+                    ]
+                },
+                {
+                    "figmaNodeId": "6:11",
+                    "cssClass": "",
+                    "styleClass": "",
+                    "doc": "start",
+                    "path": "1/5/2",
+                    "props": [
+                        {
+                            "k": "color",
+                            "v": "#FFF"
+                        },
+                        {
+                            "k": "-unity-text-align",
+                            "v": "middle-center"
+                        },
+                        {
+                            "k": "-unity-font-definition",
+                            "v": "url(\"project://database/Assets/Fonts/Outfit/Outfit.ttf?fileID=12800000&guid=ece1c9f32c448584f949b5fad5895d3c&type=3#Outfit\")"
+                        },
+                        {
+                            "k": "font-size",
+                            "v": "64px"
+                        },
+                        {
+                            "k": "-unity-font-style",
+                            "v": "bold"
+                        },
+                        {
+                            "k": "letter-spacing",
+                            "v": "undefined"
+                        },
+                        {
+                            "k": "white-space",
+                            "v": "nowrap"
+                        },
+                        {
+                            "k": "position",
+                            "v": "absolute"
+                        },
+                        {
+                            "k": "left",
+                            "v": "115px"
+                        },
+                        {
+                            "k": "top",
+                            "v": "0px"
+                        }
+                    ]
+                },
+                {
+                    "figmaNodeId": "6:19",
+                    "cssClass": "",
+                    "styleClass": "",
+                    "doc": "start",
+                    "path": "1/6",
+                    "props": [
+                        {
+                            "k": "width",
+                            "v": "687px"
+                        },
+                        {
+                            "k": "height",
+                            "v": "317px"
+                        },
+                        {
+                            "k": "position",
+                            "v": "absolute"
+                        },
+                        {
+                            "k": "left",
+                            "v": "587px"
+                        },
+                        {
+                            "k": "top",
+                            "v": "166px"
+                        }
+                    ]
+                },
+                {
+                    "figmaNodeId": "6:2",
+                    "cssClass": "",
+                    "styleClass": "",
+                    "doc": "start",
+                    "path": "1/6/1",
+                    "props": [
+                        {
+                            "k": "width",
+                            "v": "411px"
+                        },
+                        {
+                            "k": "height",
+                            "v": "76px"
+                        },
+                        {
+                            "k": "border-radius",
+                            "v": "50px"
+                        },
+                        {
+                            "k": "position",
+                            "v": "absolute"
+                        },
+                        {
+                            "k": "left",
+                            "v": "138px"
+                        },
+                        {
+                            "k": "top",
+                            "v": "236px"
+                        }
+                    ]
+                },
+                {
+                    "figmaNodeId": "6:10",
+                    "cssClass": "",
+                    "styleClass": "",
+                    "doc": "start",
+                    "path": "1/6/2",
+                    "props": [
+                        {
+                            "k": "color",
+                            "v": "#FFF"
+                        },
+                        {
+                            "k": "-unity-text-align",
+                            "v": "middle-center"
+                        },
+                        {
+                            "k": "-unity-font-definition",
+                            "v": "url(\"project://database/Assets/Fonts/Outfit/Outfit.ttf?fileID=12800000&guid=ece1c9f32c448584f949b5fad5895d3c&type=3#Outfit\")"
+                        },
+                        {
+                            "k": "font-size",
+                            "v": "64px"
+                        },
+                        {
+                            "k": "-unity-font-style",
+                            "v": "bold"
+                        },
+                        {
+                            "k": "letter-spacing",
+                            "v": "undefined"
+                        },
+                        {
+                            "k": "white-space",
+                            "v": "nowrap"
+                        },
+                        {
+                            "k": "position",
+                            "v": "absolute"
+                        },
+                        {
+                            "k": "left",
+                            "v": "261px"
+                        },
+                        {
+                            "k": "top",
+                            "v": "236px"
+                        }
+                    ]
+                },
+                {
+                    "figmaNodeId": "5:5",
+                    "cssClass": "",
+                    "styleClass": "",
+                    "doc": "start",
+                    "path": "1/6/3",
+                    "props": [
+                        {
+                            "k": "-unity-text-align",
+                            "v": "middle-center"
+                        },
+                        {
+                            "k": "text-shadow",
+                            "v": "0px 10px 20px rgba(0, 0, 0, 0.60)"
+                        },
+                        {
+                            "k": "-unity-font-definition",
+                            "v": "url(\"project://database/Assets/Fonts/Outfit/Outfit.ttf?fileID=12800000&guid=ece1c9f32c448584f949b5fad5895d3c&type=3#Outfit\")"
+                        },
+                        {
+                            "k": "font-size",
+                            "v": "110px"
+                        },
+                        {
+                            "k": "-unity-font-style",
+                            "v": "bold"
+                        },
+                        {
+                            "k": "letter-spacing",
+                            "v": "undefined"
+                        },
+                        {
+                            "k": "white-space",
+                            "v": "nowrap"
+                        },
+                        {
+                            "k": "position",
+                            "v": "absolute"
+                        },
+                        {
+                            "k": "left",
+                            "v": "0px"
+                        },
+                        {
+                            "k": "top",
+                            "v": "0px"
+                        }
+                    ]
+                }
+            ],
+            "components": [],
+            "states": []
+        }
+    ],
+    "matchedMappings": []
+}

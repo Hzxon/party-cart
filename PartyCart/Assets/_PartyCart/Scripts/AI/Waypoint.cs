@@ -13,7 +13,9 @@ public class Waypoint : MonoBehaviour
     [Header("Debug")]
     public float radius = 2f;
 
-    private void OnDrawGizmos()
+    // Route debug meshes are only needed while inspecting a selected waypoint.
+    // Keeping this out of OnDrawGizmos avoids drawing all 403 nodes every Scene View repaint.
+    private void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.yellow;
         Gizmos.DrawSphere(transform.position, 0.3f);
@@ -28,15 +30,4 @@ public class Waypoint : MonoBehaviour
         }
     }
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
 }

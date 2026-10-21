@@ -1,0 +1,23 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements">
+    <Style src="start.uss" />
+    <ui:VisualElement style="width: 2022px; height: 1129px;">
+        <ui:VisualElement style="width: 2022px; height: 1129px; position: absolute; left: 0px; top: 0px; background-image: url(&quot;project://database/Assets/Figma/Untitled/images/img-x5kr83153xqgp-406360.png?fileID=2800000&amp;guid=a10da3152639b9b47b5db9d11b7356b4&amp;type=3#img-x5kr83153xqgp-406360&quot;); -unity-background-scale-mode: scale-to-fit;" />
+        <ui:VisualElement style="width: 411px; height: 76px; border-radius: 50px; position: absolute; left: 725px; top: 648px;" />
+        <ui:VisualElement style="width: 258px; height: 81px; position: absolute; left: 802px; top: 648px;">
+            <ui:Label text="OPTION" class="unity-label" style="color: #FFF; -unity-text-align: middle-center; -unity-font-definition: url(&quot;project://database/Assets/Fonts/Outfit/Outfit.ttf?fileID=12800000&amp;guid=ece1c9f32c448584f949b5fad5895d3c&amp;type=3#Outfit&quot;); font-size: 64px; -unity-font-style: bold; letter-spacing: undefined; white-space: nowrap; position: absolute; left: 0px; top: 0px;" />
+        </ui:VisualElement>
+        <ui:VisualElement style="width: 411px; height: 86px; position: absolute; left: 725px; top: 771px;">
+            <ui:VisualElement style="width: 411px; height: 76px; border-radius: 50px; position: absolute; left: 0px; top: 0px;" />
+            <ui:Label text="QUIT" class="unity-label" style="color: #FFF; -unity-text-align: middle-center; -unity-font-definition: url(&quot;project://database/Assets/Fonts/Outfit/Outfit.ttf?fileID=12800000&amp;guid=ece1c9f32c448584f949b5fad5895d3c&amp;type=3#Outfit&quot;); font-size: 64px; -unity-font-style: bold; letter-spacing: undefined; white-space: nowrap; position: absolute; left: 125px; top: 5px;" />
+        </ui:VisualElement>
+        <ui:VisualElement style="width: 411px; height: 81px; position: absolute; left: 725px; top: 525px;">
+            <ui:VisualElement style="width: 411px; height: 76px; border-radius: 50px; position: absolute; left: 0px; top: 3px;" />
+            <ui:Label text="SHOP" class="unity-label" style="color: #FFF; -unity-text-align: middle-center; -unity-font-definition: url(&quot;project://database/Assets/Fonts/Outfit/Outfit.ttf?fileID=12800000&amp;guid=ece1c9f32c448584f949b5fad5895d3c&amp;type=3#Outfit&quot;); font-size: 64px; -unity-font-style: bold; letter-spacing: undefined; white-space: nowrap; position: absolute; left: 115px; top: 0px;" />
+        </ui:VisualElement>
+        <ui:VisualElement style="width: 687px; height: 317px; position: absolute; left: 587px; top: 166px;">
+            <ui:VisualElement style="width: 411px; height: 76px; border-radius: 50px; position: absolute; left: 138px; top: 236px;" />
+            <ui:Label text="PLAY" class="unity-label" style="color: #FFF; -unity-text-align: middle-center; -unity-font-definition: url(&quot;project://database/Assets/Fonts/Outfit/Outfit.ttf?fileID=12800000&amp;guid=ece1c9f32c448584f949b5fad5895d3c&amp;type=3#Outfit&quot;); font-size: 64px; -unity-font-style: bold; letter-spacing: undefined; white-space: nowrap; position: absolute; left: 261px; top: 236px;" />
+            <ui:Label text="PARTY KART" class="unity-label" style="-unity-text-align: middle-center; text-shadow: 0px 10px 20px rgba(0, 0, 0, 0.60); -unity-font-definition: url(&quot;project://database/Assets/Fonts/Outfit/Outfit.ttf?fileID=12800000&amp;guid=ece1c9f32c448584f949b5fad5895d3c&amp;type=3#Outfit&quot;); font-size: 110px; -unity-font-style: bold; letter-spacing: undefined; white-space: nowrap; position: absolute; left: 0px; top: 0px;" />
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>

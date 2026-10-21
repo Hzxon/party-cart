@@ -1,5 +1,6 @@
 using UnityEngine;
 
+[RequireComponent(typeof(Rigidbody))]
 public class CarController : MonoBehaviour
 {
     [Header("Wheel Colliders")]
@@ -11,6 +12,7 @@ public class CarController : MonoBehaviour
     [Header("Settings")]
     public float maxMotorTorque = 1800f;
     public float maxSteeringAngle = 32f;
+    public float highSpeedSteeringAngle = 12f;
     public float brakeForce = 3500f;
 
     [Header("Steering")]
@@ -27,9 +29,18 @@ public class CarController : MonoBehaviour
 
     float currentSteer;
 
+    public float CurrentSteerAngle => currentSteer;
+    public float Wheelbase => Mathf.Abs(transform.InverseTransformPoint(frontLeft.transform.position).z -
+                                        transform.InverseTransformPoint(rearLeft.transform.position).z);
+
+    void Awake()
+    {
+        if (rb == null) rb = GetComponent<Rigidbody>();
+    }
+
     void Start()
     {
-        rb.centerOfMass = centerOfMass.localPosition;
+        if (centerOfMass != null) rb.centerOfMass = centerOfMass.localPosition;
     }
 
     void FixedUpdate()
@@ -47,13 +58,7 @@ public class CarController : MonoBehaviour
 
     public void Move(float steering, float throttle, float brake)
     {
-        float speedKmh = rb.linearVelocity.magnitude * 3.6f;
-
-        float steeringLimit = Mathf.Lerp(
-            maxSteeringAngle,
-            8f,
-            Mathf.Clamp01(speedKmh / 90f)
-        );
+        float steeringLimit = GetSteeringLimit();
 
         float targetSteer = steering * steeringLimit;
 
@@ -84,7 +89,7 @@ public class CarController : MonoBehaviour
 
     void ApplySteeringAssist()
     {
-        if (rb.linearVelocity.sqrMagnitude < 1f)
+        if (rb.linearVelocity.sqrMagnitude < 1f || Vector3.Dot(rb.linearVelocity, transform.forward) < 0f)
             return;
 
         Vector3 velocityDir = rb.linearVelocity.normalized;
@@ -96,14 +101,55 @@ public class CarController : MonoBehaviour
         );
 
         rb.AddTorque(
-            Vector3.up * angle * steeringAssist,
+            Vector3.up * -angle * steeringAssist,
             ForceMode.Acceleration
         );
     }
 
     public float GetSpeed()
     {
-        return rb.linearVelocity.magnitude;
+        return Vector3.ProjectOnPlane(rb.linearVelocity, Vector3.up).magnitude;
+    }
+
+    public void ResetAfterRecovery(Vector3 position, Quaternion rotation)
+    {
+        // Recreate wheel contacts at the new location instead of carrying suspension/torque over.
+        var wheels = new[] { frontLeft, frontRight, rearLeft, rearRight };
+        var wasEnabled = new bool[wheels.Length];
+        for (int i = 0; i < wheels.Length; i++)
+        {
+            if (wheels[i] == null) continue;
+            wasEnabled[i] = wheels[i].enabled;
+            wheels[i].motorTorque = 0f;
+            wheels[i].brakeTorque = brakeForce;
+            wheels[i].steerAngle = 0f;
+            wheels[i].enabled = false;
+        }
+
+        var interpolation = rb.interpolation;
+        rb.interpolation = RigidbodyInterpolation.None;
+        rb.position = position;
+        rb.rotation = rotation;
+        transform.SetPositionAndRotation(position, rotation);
+        rb.linearVelocity = Vector3.zero;
+        rb.angularVelocity = Vector3.zero;
+        currentSteer = 0f;
+        Physics.SyncTransforms();
+
+        for (int i = 0; i < wheels.Length; i++)
+        {
+            if (wheels[i] == null) continue;
+            wheels[i].enabled = wasEnabled[i];
+            wheels[i].rotationSpeed = 0f;
+        }
+        rb.interpolation = interpolation;
+        rb.WakeUp();
+    }
+
+    public float GetSteeringLimit()
+    {
+        return Mathf.Lerp(maxSteeringAngle, highSpeedSteeringAngle,
+            Mathf.Clamp01(GetSpeed() * 3.6f / 90f));
     }
 
     void ApplyAntiRoll(WheelCollider left, WheelCollider right)

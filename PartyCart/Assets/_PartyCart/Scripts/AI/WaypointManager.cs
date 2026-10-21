@@ -13,7 +13,7 @@ public class WaypointManager : MonoBehaviour
         BuildWaypointList();
     }
 
-    private void BuildWaypointList()
+    public void BuildWaypointList()
     {
         waypoints.Clear();
 
@@ -35,6 +35,12 @@ public class WaypointManager : MonoBehaviour
 
     public Waypoint GetWaypoint(int index)
     {
-        return waypoints[index % waypoints.Count];
+        if (waypoints.Count == 0) return null;
+        return waypoints[((index % waypoints.Count) + waypoints.Count) % waypoints.Count];
+    }
+
+    private void OnDestroy()
+    {
+        if (Instance == this) Instance = null;
     }
 }

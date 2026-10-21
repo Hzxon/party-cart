@@ -1,0 +1,90 @@
+.race-setup { position: absolute; left: 0; right: 0; top: 0; bottom: 0; display: none; flex-direction: row; overflow: hidden; background-color: rgb(246,243,231); }
+.race-setup Label { margin: 0; padding: 0; }
+.setup-rail { width: 27.4%; flex-shrink: 0; background-color: rgb(21,63,71); color: rgb(246,243,231); padding: 45px 43px 35px; }
+.setup-wordmark { font-size: 78px; white-space: nowrap; }
+.setup-subtitle { font-size: 18px; letter-spacing: 2px; margin-top: 17px; }
+.setup-title { font-size: 96px; margin-top: 48px; margin-bottom: 44px; color: rgb(246,243,231); }
+.race-setup.is-character .setup-title { font-size: 80px; white-space: normal; }
+.setup-ticket { margin-top: auto; background-color: rgb(246,243,231); color: rgb(21,63,71); padding: 30px; }
+.setup-ticket-header { flex-direction: row; justify-content: space-between; align-items: center; border-bottom-width: 2px; border-bottom-color: rgb(21,63,71); padding-bottom: 24px; margin-bottom: 28px; }
+.setup-ticket-header Label { font-size: 17px; }
+.setup-selected-label { font-size: 17px; letter-spacing: 1px; margin-bottom: 15px; }
+.setup-selection-summary { flex-direction: row; align-items: center; }
+.setup-selected-info { flex-grow: 1; flex-shrink: 1; }
+.setup-selected-name { font-size: 59px; white-space: normal; }
+.setup-selected-check { font-size: 18px; margin-top: 19px; }
+.setup-portrait { width: 115px; height: 130px; margin-right: 20px; flex-shrink: 0; border-width: 2px; border-color: rgb(21,63,71); background-color: rgb(246,243,231); }
+.race-setup.is-character .setup-selected-name { font-size: 49px; }
+.setup-map-confirmation { margin-top: 27px; padding-top: 23px; border-top-width: 2px; border-top-color: rgb(21,63,71); flex-direction: row; justify-content: space-between; align-items: center; }
+.setup-map-confirmation Label { font-size: 17px; }
+.setup-confirmed-map { flex-shrink: 1; white-space: normal; -unity-text-align: middle-right; margin-left: 12px; }
+.setup-status { font-size: 17px; white-space: normal; color: rgb(162,61,33); margin-top: 13px; }
+.setup-continue { min-height: 100px; height: 100px; font-size: 54px; margin-top: 30px; padding-left: 22px; padding-right: 15px; -unity-text-align: middle-left; white-space: nowrap; }
+.setup-back { color: rgb(246,243,231); background-color: rgba(0,0,0,0); border-width: 0; border-radius: 0; margin: 24px 0 0; padding: 0; font-size: 19px; height: 39px; min-height: 39px; -unity-text-align: middle-left; }
+.setup-back:hover, .setup-back:focus { color: rgb(233,240,89); background-color: rgba(0,0,0,0); }
+.setup-content { flex-grow: 1; flex-shrink: 1; min-width: 0; position: relative; }
+.setup-hero { flex-grow: 1; flex-shrink: 1; min-height: 150px; overflow: hidden; position: relative; background-color: rgb(246,243,231); }
+.setup-preview { position: absolute; left: 0; right: 0; top: 0; bottom: 0; }
+.setup-preview-tag { position: absolute; left: 45px; top: 48px; padding: 17px 24px; border-width: 3px; border-color: rgb(21,63,71); background-color: rgb(246,243,231); font-size: 20px; letter-spacing: 1px; }
+.setup-character-heading { position: absolute; left: 50px; top: 48px; }
+.setup-eyebrow { font-size: 18px; letter-spacing: 2px; }
+.setup-character-name { font-size: 112px; margin-top: 13px; }
+.setup-map-nameplate { position: absolute; left: 45px; right: 45px; bottom: 42px; padding: 23px 30px; border-width: 3px; border-color: rgb(21,63,71); background-color: rgb(246,243,231); flex-direction: row; align-items: center; justify-content: space-between; }
+.setup-map-name { font-size: 65px; flex-grow: 1; flex-shrink: 1; white-space: normal; margin-right: 20px; }
+.setup-map-nameplate > Label { font-size: 19px; }
+.setup-map-nameplate > .setup-map-name { font-size: 65px; }
+.setup-route-host { width: 115px; height: 115px; margin-left: 25px; flex-shrink: 0; }
+.setup-route-drawing { flex-grow: 1; }
+.setup-catalog { flex-shrink: 0; height: 300px; padding: 23px 35px 32px; border-top-width: 3px; border-top-color: rgb(21,63,71); background-color: rgb(246,243,231); }
+.setup-catalog-header { flex-direction: row; justify-content: space-between; align-items: center; margin-bottom: 19px; min-height: 32px; }
+.setup-catalog-caption { flex-direction: row; align-items: center; }
+.setup-catalog-caption Label { font-size: 19px; margin-right: 17px; }
+.setup-see-all { font-size: 19px; padding: 4px 0; margin: 0; min-height: 32px; color: rgb(21,63,71); background-color: rgba(0,0,0,0); border-width: 0; border-bottom-width: 2px; border-color: rgb(21,63,71); border-radius: 0; }
+.setup-see-all:hover { background-color: rgb(233,240,89); }
+.setup-choices-row { flex-direction: row; flex-grow: 1; min-height: 0; align-items: center; }
+.setup-page-button { width: 53px; height: 82px; margin: 0; padding: 0; font-size: 49px; border-width: 2px; border-color: rgb(21,63,71); border-radius: 0; background-color: rgba(0,0,0,0); color: rgb(21,63,71); flex-shrink: 0; }
+.setup-page-button:hover { background-color: rgb(233,240,89); }
+.setup-page-button:disabled { opacity: 0.3; }
+.setup-choices { flex-grow: 1; flex-shrink: 1; flex-direction: row; margin: 0 17px; min-width: 0; }
+.race-setup.single-page .setup-choices { margin-left: 0; margin-right: 0; }
+.setup-choice { margin: 0; margin-right: 16px; padding: 0; background-color: rgb(246,243,231); color: rgb(21,63,71); border-width: 2px; border-color: rgb(21,63,71); border-radius: 0; overflow: hidden; flex-shrink: 1; }
+.setup-choice:hover { border-color: rgb(232,108,74); }
+.setup-choice:focus { border-color: rgb(232,108,74); }
+.setup-choice.is-selected { border-width: 4px; border-color: rgb(21,63,71); }
+.setup-choice-image { height: 118px; min-height: 0; flex-shrink: 1; width: 100%; border-bottom-width: 2px; border-bottom-color: rgb(21,63,71); }
+.setup-choice-label { padding: 9px 11px; font-size: 30px; white-space: nowrap; text-overflow: ellipsis; overflow: hidden; -unity-text-align: middle-left; }
+.setup-choice.is-selected .setup-choice-label { background-color: rgb(233,240,89); }
+.setup-choice-check { position: absolute; top: 0; right: 0; width: 38px; height: 36px; font-size: 23px; -unity-text-align: middle-center; color: rgb(21,63,71); background-color: rgb(233,240,89); border-left-width: 2px; border-bottom-width: 2px; border-color: rgb(21,63,71); }
+.race-setup.is-character .setup-choice-label { font-size: 26px; -unity-text-align: middle-center; }
+.setup-race-stripe { position: absolute; left: 0; right: 0; bottom: 0; height: 12px; background-color: rgb(21,63,71); }
+.setup-overlay { position: absolute; left: 0; right: 0; top: 0; bottom: 0; display: none; background-color: rgb(246,243,231); padding: 45px; }
+.setup-overlay-header { flex-direction: row; justify-content: space-between; align-items: center; margin-bottom: 34px; }
+.setup-overlay-header > Label { font-size: 73px; }
+.setup-close-overlay { min-height: 65px; font-size: 21px; padding: 10px 21px; margin: 0; color: rgb(21,63,71); border-width: 2px; border-color: rgb(21,63,71); background-color: rgb(246,243,231); border-radius: 0; }
+.setup-close-overlay:hover { background-color: rgb(233,240,89); }
+.setup-all-scroll { flex-grow: 1; min-height: 0; }
+.setup-all-choices { flex-direction: row; flex-wrap: wrap; }
+.setup-all-choices .setup-choice { margin-bottom: 24px; }
+.setup-all-choices .setup-choice-image { height: 165px; }
+.race-setup.compact .setup-rail { padding: 28px; }
+.race-setup.compact .setup-wordmark { font-size: 65px; }
+.race-setup.compact .setup-subtitle { font-size: 16px; }
+.race-setup.compact .setup-title { font-size: 76px; margin-top: 26px; margin-bottom: 28px; }
+.race-setup.compact.is-character .setup-title { font-size: 64px; }
+.race-setup.compact .setup-ticket { padding: 23px; }
+.race-setup.compact .setup-ticket-header { padding-bottom: 16px; margin-bottom: 20px; }
+.race-setup.compact .setup-ticket-header Label { font-size: 15px; }
+.race-setup.compact .setup-selected-name { font-size: 46px; }
+.race-setup.compact.is-character .setup-selected-name { font-size: 39px; }
+.race-setup.compact .setup-portrait { width: 83px; height: 101px; margin-right: 13px; }
+.race-setup.compact .setup-continue { height: 82px; min-height: 82px; font-size: 42px; margin-top: 22px; }
+.race-setup.compact .setup-map-confirmation { padding-top: 17px; margin-top: 20px; }
+.race-setup.compact .setup-map-confirmation Label { font-size: 15px; }
+.race-setup.compact .setup-catalog { height: 245px; padding: 17px 23px 26px; }
+.race-setup.compact .setup-choice-image { height: 92px; }
+.race-setup.compact .setup-choice-label { font-size: 25px; }
+.race-setup.compact.is-character .setup-choice-label { font-size: 22px; }
+.race-setup.compact .setup-character-name { font-size: 90px; }
+.race-setup.compact .setup-map-nameplate { left: 27px; right: 27px; bottom: 28px; padding: 18px 23px; }
+.race-setup.compact .setup-map-nameplate > .setup-map-name { font-size: 49px; }
+.race-setup.compact .setup-route-host { width: 85px; height: 85px; margin-left: 18px; }

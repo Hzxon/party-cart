@@ -1,0 +1,18 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements">
+    <Style src="../../../_PartyCart/UI/PitPassTheme.uss" />
+    <Style src="start.uss" />
+    <ui:VisualElement name="main-menu" class="menu-root pit-pass">
+        <ui:VisualElement class="menu-background" picking-mode="Ignore" />
+        <ui:VisualElement class="menu-rail">
+            <ui:Label text="PARTY CART" class="menu-wordmark pit-wordmark pit-title" picking-mode="Ignore" />
+            <ui:VisualElement class="menu-ticket">
+                <ui:VisualElement class="ticket-eyebrow" picking-mode="Ignore"><ui:Label text="●  TIKET MASUK" class="ticket-label" /><ui:Label text="NO. 004" class="ticket-serial" /></ui:VisualElement>
+                <ui:Button name="play-button" text="PLAY      ↗" class="pit-button pit-primary pit-title menu-play" />
+                <ui:VisualElement class="menu-secondary"><ui:Button name="shop-button" text="SHOP" class="pit-button menu-secondary-button menu-shop" /><ui:Button name="option-button" text="OPTION" class="pit-button menu-secondary-button" /></ui:VisualElement>
+                <ui:Button name="quit-button" text="QUIT" class="menu-quit" />
+                <ui:VisualElement class="ticket-footer" picking-mode="Ignore"><ui:Label name="menu-status" text="BUKAN BALAP BIASA." class="menu-status" /><ui:Label text="▌▏▎▏▌▎▏▏▌" class="ticket-barcode" /></ui:VisualElement>
+            </ui:VisualElement>
+        </ui:VisualElement>
+        <ui:VisualElement class="car-caption" picking-mode="Ignore"><ui:Label text="■   JAGOANMU, SIAP GAS." /></ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>

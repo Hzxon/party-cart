@@ -21,6 +21,7 @@ public class AIController : MonoBehaviour
     public float baseTargetSpeed = 16f;
     public float speedVariance = 1.5f;
     public float lookAheadDistance = 6f;
+    public float laneOffset;
 
     [Header("Steering")]
     public float steeringSensitivity = 1f;
@@ -47,19 +48,43 @@ public class AIController : MonoBehaviour
     private bool leftBlocked;
     private bool centerBlocked;
     private bool rightBlocked;
+    private float avoidanceLane;
+    private float lastSteering;
+    private readonly RaycastHit[] sensorHits = new RaycastHit[24];
+    private readonly RaycastHit[] recoveryGroundHits = new RaycastHit[8];
+    private readonly Collider[] recoveryOverlaps = new Collider[64];
+    private BoxCollider chassis;
+    private int recoveryAttempts;
+    private int lastProgressIndex;
+    public int RecoveryResets { get; private set; }
 
     void Awake()
     {
         car = GetComponent<CarController>();
         progress = GetComponent<RaceProgressTracker>();
+        chassis = GetComponent<BoxCollider>();
+        avoidanceLane = laneOffset;
+    }
 
-        personalTargetSpeed =
-            baseTargetSpeed + Random.Range(-speedVariance, speedVariance);
+    void Start()
+    {
+        personalTargetSpeed = baseTargetSpeed + Random.Range(-speedVariance, speedVariance);
+        avoidanceLane = laneOffset;
     }
 
     void FixedUpdate()
     {
-        if (WaypointManager.Instance == null) return;
+        if (WaypointManager.Instance == null || WaypointManager.Instance.waypoints.Count < 3 ||
+            !RaceCountdownController.RaceStarted || progress.HasFinished)
+        {
+            car.Move(0f, 0f, 1f);
+            return;
+        }
+        if (lastProgressIndex != progress.currentWaypointIndex)
+        {
+            lastProgressIndex = progress.currentWaypointIndex;
+            recoveryAttempts = 0;
+        }
 
         switch (state)
         {
@@ -89,7 +114,9 @@ public class AIController : MonoBehaviour
         Waypoint selected =
             WaypointManager.Instance.GetWaypoint(index);
 
-        while (travelled < lookAheadDistance)
+        int visited = 0;
+        float lookAhead = Mathf.Max(lookAheadDistance, car.GetSpeed() * 0.5f + 5f);
+        while (travelled < lookAhead && visited++ < WaypointManager.Instance.waypoints.Count)
         {
             Waypoint wp =
                 WaypointManager.Instance.GetWaypoint(index);
@@ -120,14 +147,21 @@ public class AIController : MonoBehaviour
     {
         if (targetWaypoint == null) return;
 
-        Vector3 localTarget =
-            transform.InverseTransformPoint(targetWaypoint.transform.position);
+        Vector3 tangent = targetWaypoint.next != null
+            ? targetWaypoint.next.transform.position - targetWaypoint.transform.position
+            : transform.forward;
+        Vector3 side = Vector3.Cross(Vector3.up, tangent.normalized);
+        float preferred = ChooseLane(targetWaypoint.transform.position, side);
+        avoidanceLane = Mathf.MoveTowards(avoidanceLane, preferred, 5f * Time.fixedDeltaTime);
+        Vector3 targetPosition = targetWaypoint.transform.position + side * avoidanceLane;
+        Vector3 localTarget = transform.InverseTransformPoint(targetPosition);
 
         float angle =
             Mathf.Atan2(localTarget.x, localTarget.z) * Mathf.Rad2Deg;
 
-        float steering =
-            Mathf.Clamp(angle / 35f, -1f, 1f);
+        float distanceSquared = Mathf.Max(1f, localTarget.x * localTarget.x + localTarget.z * localTarget.z);
+        float requestedAngle = Mathf.Atan2(2f * car.Wheelbase * localTarget.x, distanceSquared) * Mathf.Rad2Deg;
+        float steering = Mathf.Clamp(requestedAngle / Mathf.Max(1f, car.GetSteeringLimit()) * steeringSensitivity, -1f, 1f);
 
         // Kurangi steering kalau speed tinggi.
         float speed = car.GetSpeed(); // m/s
@@ -139,11 +173,12 @@ public class AIController : MonoBehaviour
                 Mathf.Clamp01(speed / 18f)
             );
 
-        steering *= steeringSensitivity;
         steering *= steeringLimit;
         steering = Mathf.Clamp(steering, -1f, 1f);
+        lastSteering = steering;
 
         float targetSpeed = CalculateTargetSpeed(angle);
+        if (centerBlocked) targetSpeed = Mathf.Min(targetSpeed, 8f);
 
         float throttle = 0f;
         float brake = 0f;
@@ -237,7 +272,7 @@ public class AIController : MonoBehaviour
     void DetectObstacle()
     {
         Vector3 origin =
-            transform.position + transform.up * 0.35f;
+            transform.position + transform.up * 0.2f + transform.forward * 1.5f;
 
         Vector3 leftOrigin =
             origin - transform.right * sensorOffset;
@@ -245,35 +280,13 @@ public class AIController : MonoBehaviour
         Vector3 rightOrigin =
             origin + transform.right * sensorOffset;
 
-        leftBlocked = Physics.Raycast(
-            leftOrigin,
-            transform.forward,
-            sensorDistance,
-            obstacleMask
-        );
-
-        centerBlocked = Physics.Raycast(
-            origin,
-            transform.forward,
-            sensorDistance,
-            obstacleMask
-        );
-
-        rightBlocked = Physics.Raycast(
-            rightOrigin,
-            transform.forward,
-            sensorDistance,
-            obstacleMask
-        );
+        float range = Mathf.Max(sensorDistance, car.GetSpeed() * 0.65f);
+        leftBlocked = ClearDistance(leftOrigin, transform.forward, range) < range;
+        centerBlocked = ClearDistance(origin, transform.forward, range) < range;
+        rightBlocked = ClearDistance(rightOrigin, transform.forward, range) < range;
 
         bool blocked =
             leftBlocked || centerBlocked || rightBlocked;
-
-        if (!blocked)
-        {
-            stuckTimer = 0f;
-            return;
-        }
 
         if (car.GetSpeed() > stuckSpeedThreshold)
         {
@@ -295,17 +308,101 @@ public class AIController : MonoBehaviour
 
     void StartRecovery()
     {
+        recoveryAttempts++;
+        // Rejoin the last passed node only after repeated failed reverse manoeuvres.
+        // This never advances waypoint or lap progress.
+        if (recoveryAttempts >= 3 && (progress.currentWaypointIndex != 0 || progress.lapCount > 0) &&
+            TryResetToClearWaypoint())
+        {
+            recoveryAttempts = 0;
+            stuckTimer = 0f;
+            lastSteering = 0f;
+            state = AIState.Driving;
+            RecoveryResets++;
+            return;
+        }
         state = AIState.Recovering;
 
         recoveryTimer = reverseDuration;
         stuckTimer = 0f;
 
-        if (leftBlocked && !rightBlocked)
+        if (Mathf.Abs(lastSteering) > 0.05f)
+            reverseSteering = -Mathf.Sign(lastSteering);
+        else if (leftBlocked && !rightBlocked)
             reverseSteering = 1f;
         else if (rightBlocked && !leftBlocked)
             reverseSteering = -1f;
         else
             reverseSteering = Random.value > 0.5f ? 1f : -1f;
+    }
+
+    bool TryResetToClearWaypoint()
+    {
+        var manager = WaypointManager.Instance;
+        if (manager == null || chassis == null) return false;
+
+        // Only search already-passed nodes, so recovery never awards race progress.
+        int backtrack = Mathf.Min(6, manager.waypoints.Count - 1);
+        if (progress.lapCount == 0)
+            backtrack = Mathf.Min(backtrack, progress.currentWaypointIndex);
+
+        Vector3 scale = transform.lossyScale;
+        Vector3 halfExtents = Vector3.Scale(chassis.size * 0.5f,
+            new Vector3(Mathf.Abs(scale.x), Mathf.Abs(scale.y), Mathf.Abs(scale.z))) +
+            new Vector3(0.25f, 0.1f, 0.25f);
+
+        Physics.SyncTransforms();
+        for (int back = 1; back <= backtrack; back++)
+        {
+            var node = manager.GetWaypoint(progress.currentWaypointIndex - back);
+            Vector3 forward = Vector3.ProjectOnPlane(node.next.transform.position - node.transform.position, Vector3.up);
+            if (forward.sqrMagnitude < 0.001f) continue;
+            Quaternion rotation = Quaternion.LookRotation(forward.normalized, Vector3.up);
+            Vector3 right = rotation * Vector3.right;
+
+            for (int lane = 0; lane < 3; lane++)
+            {
+                float offset = lane == 0 ? Mathf.Clamp(laneOffset, -2.2f, 2.2f) : lane == 1 ? -2.2f : 2.2f;
+                Vector3 roadPoint = node.transform.position + right * offset;
+                if (!TryGetRecoveryGround(roadPoint, out float groundY)) continue;
+                Vector3 position = new Vector3(roadPoint.x, groundY + 1.2f, roadPoint.z);
+                Vector3 center = position + rotation * Vector3.Scale(chassis.center, scale);
+                int count = Physics.OverlapBoxNonAlloc(center, halfExtents, recoveryOverlaps,
+                    rotation, ~0, QueryTriggerInteraction.Ignore);
+                // A full buffer is ambiguous; never teleport into unchecked geometry.
+                if (count == recoveryOverlaps.Length) continue;
+                bool occupied = false;
+                for (int i = 0; i < count; i++)
+                {
+                    if (recoveryOverlaps[i].attachedRigidbody == car.rb) continue;
+                    occupied = true;
+                    break;
+                }
+                if (occupied) continue;
+
+                car.ResetAfterRecovery(position, rotation);
+                avoidanceLane = offset;
+                return true;
+            }
+        }
+        // Continue the normal reverse manoeuvre if every candidate is occupied.
+        return false;
+    }
+
+    bool TryGetRecoveryGround(Vector3 roadPoint, out float groundY)
+    {
+        groundY = float.NegativeInfinity;
+        int count = Physics.RaycastNonAlloc(roadPoint + Vector3.up * 2f, Vector3.down,
+            recoveryGroundHits, 4f, ~0, QueryTriggerInteraction.Ignore);
+        if (count == recoveryGroundHits.Length) return false;
+        for (int i = 0; i < count; i++)
+        {
+            var hit = recoveryGroundHits[i];
+            if (hit.rigidbody != null || hit.normal.y < 0.75f || Mathf.Abs(hit.point.y - roadPoint.y) > 0.5f)
+                continue;
+            groundY = Mathf.Max(groundY, hit.point.y);
+        }
+        return !float.IsNegativeInfinity(groundY);
     }
 
     void Recover()
@@ -329,10 +426,42 @@ public class AIController : MonoBehaviour
                 obstacleMask
             );
 
-        if (!blocked || recoveryTimer <= 0f)
+        if ((!blocked && recoveryTimer < reverseDuration - 0.45f) || recoveryTimer <= 0f)
         {
             state = AIState.Driving;
         }
+    }
+
+    // Score a few lanes on the existing road instead of steering into a blocked racing line.
+    float ChooseLane(Vector3 center, Vector3 side)
+    {
+        Vector3 origin = transform.position + Vector3.up * 0.2f + transform.forward * 1.5f;
+        float scan = Mathf.Max(7f, car.GetSpeed() * 0.65f);
+        float bestLane = laneOffset;
+        float bestScore = float.NegativeInfinity;
+        for (int i = 0; i < 4; i++)
+        {
+            float candidate = i == 0 ? laneOffset : i == 1 ? 0f : i == 2 ? -2.2f : 2.2f;
+            Vector3 point = center + side * candidate;
+            point.y = origin.y;
+            Vector3 direction = (point - origin).normalized;
+            float clear = ClearDistance(origin, direction, scan);
+            float score = clear - Mathf.Abs(candidate - laneOffset) * 0.12f - Mathf.Abs(candidate - avoidanceLane) * 0.04f;
+            if (score > bestScore) { bestScore = score; bestLane = candidate; }
+        }
+        return bestLane;
+    }
+
+    float ClearDistance(Vector3 origin, Vector3 direction, float range)
+    {
+        int count = Physics.SphereCastNonAlloc(origin, 0.65f, direction, sensorHits, range, obstacleMask, QueryTriggerInteraction.Ignore);
+        float nearest = range;
+        for (int i = 0; i < count; i++)
+        {
+            if (sensorHits[i].rigidbody == car.rb) continue;
+            nearest = Mathf.Min(nearest, sensorHits[i].distance);
+        }
+        return nearest;
     }
 
     // =====================================================

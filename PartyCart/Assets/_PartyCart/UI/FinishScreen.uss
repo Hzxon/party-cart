@@ -1,0 +1,38 @@
+.finish-screen { position: absolute; left: 0; right: 0; top: 0; bottom: 0; display: none; }
+.brand { position: absolute; left: 2.8%; top: 4.2%; font-size: 49px; }
+.winner-info { position: absolute; left: 2.8%; top: 15%; max-width: 55%; align-items: flex-start; }
+.finish-title { margin: 0; padding: 0; font-size: 133px; color: rgb(246,243,231); -unity-text-outline-width: 4px; -unity-text-outline-color: rgb(21,63,71); }
+.winner-name { margin: 12px 0 0 0; padding: 11px 25px; background-color: rgb(233,240,89); color: rgb(21,63,71); font-size: 43px; white-space: normal; }
+.player-place { margin: 14px 0 0 0; padding: 8px 12px; font-size: 19px; color: rgb(21,63,71); background-color: rgb(246,243,231); }
+.race-stats { position: absolute; right: 3%; bottom: 42%; flex-direction: row; padding: 22px 30px; background-color: rgb(246,243,231); border-radius: 5px; }
+.stat { min-width: 175px; }.stat-best { margin-left: 30px; padding-left: 30px; border-left-width: 2px; border-left-color: rgb(21,63,71); }
+.stat-label { font-size: 17px; letter-spacing: 1px; margin: 0; padding: 0; }
+.stat-value { font-size: 37px; margin: 7px 0 0 0; padding: 0; }
+.results-paper { position: absolute; left: 0; right: 0; bottom: 0; height: 37.4%; background-color: rgb(246,243,231); border-top-width: 15px; border-top-color: rgb(233,240,89); padding: 31px 50px; flex-direction: row; }
+.paper-header { width: 15%; flex-shrink: 0; border-right-width: 2px; border-right-color: rgb(21,63,71); padding-right: 28px; padding-top: 6px; }
+.paper-kicker { font-size: 18px; letter-spacing: 1px; margin: 0; padding: 0; }
+.paper-title { font-size: 58px; white-space: normal; margin: 20px 0 0 0; padding: 0; }
+.lap-count { font-size: 19px; margin: 22px 0 0 0; padding: 0; }
+.ranking-panel { flex-grow: 1; flex-shrink: 1; margin: 0 45px; min-width: 0; }
+.column-head { flex-direction: row; justify-content: space-between; padding: 0 12px 11px 12px; }
+.column-head Label { font-size: 18px; letter-spacing: 1px; margin: 0; padding: 0; }
+.name-heading { flex-grow: 1; }.time-heading { width: 145px; -unity-text-align: middle-right; }
+.ranking-list { flex-grow: 1; flex-shrink: 1; min-height: 60px; }
+.ranking-list .unity-scroll-view__content-container { padding: 1px 0; }
+.racer-row { flex-direction: row; align-items: center; height: 57px; flex-shrink: 0; border-bottom-width: 1px; border-bottom-color: rgba(21,63,71,0.25); padding: 0 12px; margin: 1px 0; }
+.racer-row Label { margin: 0; padding: 0; }
+.racer-row--winner { background-color: rgb(203,225,211); }
+.racer-row--player { background-color: rgb(233,240,89); border-width: 2px; border-color: rgb(21,63,71); }
+.racer-position { width: 42px; font-size: 34px; flex-shrink: 0; -unity-font-definition: url("project://database/Assets/TextMesh Pro/Examples & Extras/Fonts/Bangers.ttf?fileID=12800000&guid=5dd49b3eacc540408c98eee0de38e0f1&type=3#Bangers"); }
+.racer-paint { width: 15px; height: 23px; margin: 0 13px 0 8px; border-width: 1px; border-color: rgb(21,63,71); border-radius: 2px; flex-shrink: 0; }
+.racer-name { flex-grow: 1; flex-shrink: 1; font-size: 22px; overflow: hidden; text-overflow: ellipsis; }
+.racer-time { width: 145px; font-size: 22px; -unity-text-align: middle-right; flex-shrink: 0; }
+.result-footer { width: 18%; flex-shrink: 0; justify-content: flex-end; }
+.race-status { font-size: 18px; white-space: normal; min-height: 40px; margin: 0 0 20px 0; padding: 0; }
+.replay-button { height: 83px; margin-bottom: 17px; -unity-text-align: middle-left; padding-left: 20px; font-size: 21px; }
+.menu-button { height: 80px; font-size: 22px; }
+.finish-screen.compact .paper-kicker, .finish-screen.compact .column-head Label, .finish-screen.compact .race-status { font-size: 16px; }
+.finish-screen.compact .paper-title { font-size: 49px; }
+.finish-screen.compact .ranking-panel { margin-left: 27px; margin-right: 27px; }
+.finish-screen.compact .racer-name, .finish-screen.compact .racer-time { font-size: 20px; }
+.finish-screen.compact .replay-button { font-size: 19px; padding-left: 12px; }

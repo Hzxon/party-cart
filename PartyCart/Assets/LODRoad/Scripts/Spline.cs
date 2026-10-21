@@ -3,7 +3,9 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+#if UNITY_EDITOR
 using UnityEditor;
+#endif
 using UnityEngine;
 
 namespace LODRoad{
@@ -868,6 +870,7 @@ public class Spline : MonoBehaviour {
 }
 
 
+#if UNITY_EDITOR
 [CustomEditor(typeof(Spline))]
 public class SplineEditor : Editor
 {
@@ -1537,4 +1540,5 @@ public class SplineEditor : Editor
     }
 
 }
+#endif
 }

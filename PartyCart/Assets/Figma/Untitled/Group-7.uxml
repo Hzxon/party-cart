@@ -1,0 +1,10 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements">
+    <Style src="Group-7.uss" />
+    <ui:VisualElement style="width: 2018px; height: 1127px;">
+        <ui:VisualElement style="width: 2018px; height: 1127px; position: absolute; left: 0px; top: 0px;">
+            <ui:VisualElement style="width: 2018px; height: 1127px; position: absolute; left: 0px; top: 0px;">
+                <ui:VisualElement style="width: 2018px; height: 1127px; position: absolute; left: 0px; top: 0px; background-image: url(&quot;project://database/Assets/Figma/Untitled/images/img-111w94pdyvkka-437618.png?fileID=2800000&amp;guid=ff178beaf5a46d8428fdd410cba18f41&amp;type=3#img-111w94pdyvkka-437618&quot;); -unity-background-scale-mode: scale-to-fit;" />
+            </ui:VisualElement>
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>

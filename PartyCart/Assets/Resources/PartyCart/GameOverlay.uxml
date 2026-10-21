@@ -1,0 +1,51 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements">
+    <Style src="../../_PartyCart/UI/PitPassTheme.uss" />
+    <Style src="../../_PartyCart/UI/GameOverlay.uss" />
+    <ui:VisualElement name="game-overlay" class="game-overlay pit-pass" picking-mode="Ignore">
+        <ui:VisualElement name="wrong-way" class="wrong-way" picking-mode="Ignore">
+            <ui:Label text="↶" class="wrong-icon" />
+            <ui:VisualElement><ui:Label text="SALAH ARAH!" class="pit-title warning-title" /><ui:Label text="Putar balik ke arah lintasan" class="warning-detail" /></ui:VisualElement>
+        </ui:VisualElement>
+        <ui:VisualElement name="reset-prompt" class="reset-prompt" picking-mode="Ignore">
+            <ui:Label name="reset-caption" text="Kembali ke titik aman terakhir" class="reset-caption" />
+            <ui:VisualElement class="reset-ticket"><ui:Label text="R" class="keycap" /><ui:VisualElement class="reset-info"><ui:Label text="TAHAN UNTUK RESET" class="pit-title reset-title" /><ui:VisualElement class="reset-track"><ui:VisualElement name="reset-fill" class="reset-fill" /></ui:VisualElement></ui:VisualElement></ui:VisualElement>
+        </ui:VisualElement>
+        <ui:VisualElement name="drift-hud" class="drift-hud" picking-mode="Ignore">
+            <ui:VisualElement class="drift-heading"><ui:Label name="drift-title" text="DRIFT" class="pit-title drift-title" /><ui:Label name="drift-hint" text="TAHAN SPACE + BELOK" class="drift-hint" /></ui:VisualElement>
+            <ui:VisualElement class="drift-track"><ui:VisualElement name="drift-fill" class="drift-fill" /></ui:VisualElement>
+        </ui:VisualElement>
+        <ui:VisualElement name="game-modal" class="game-modal">
+            <ui:VisualElement name="pause-page" class="overlay-paper pause-paper">
+                <ui:Label text="PARTY CART" class="paper-wordmark pit-title" />
+                <ui:Label text="PAUSE" class="overlay-title pit-title" />
+                <ui:Button name="resume" text="LANJUT BALAP    ▸" class="pit-button pit-primary pit-title overlay-button" />
+                <ui:Button name="pause-settings" text="PENGATURAN" class="pit-button pit-title overlay-button" />
+                <ui:Button name="restart" text="ULANG BALAP" class="pit-button pit-title overlay-button" />
+                <ui:Button name="main-menu" text="KEMBALI KE MENU" class="text-button" />
+                <ui:Label text="ESC   Kembali" class="keyboard-hint" />
+            </ui:VisualElement>
+            <ui:VisualElement name="settings-page" class="overlay-paper settings-paper">
+                <ui:Label text="PARTY CART" class="paper-wordmark pit-title" />
+                <ui:Label text="PENGATURAN" class="overlay-title settings-title pit-title" />
+                <ui:VisualElement class="options-tabs"><ui:Button name="audio-tab" text="AUDIO" class="options-tab" /><ui:Button name="display-tab" text="TAMPILAN" class="options-tab" /></ui:VisualElement>
+                <ui:VisualElement name="audio-options" class="options-content">
+                    <ui:VisualElement class="setting-row"><ui:Label text="VOLUME UTAMA" class="setting-label" /><ui:Slider name="master-volume" low-value="0" high-value="100" class="volume-slider" /><ui:Label name="master-value" text="80%" class="setting-value" /></ui:VisualElement>
+                    <ui:VisualElement class="setting-row"><ui:Label text="MUSIK" class="setting-label" /><ui:Slider name="music-volume" low-value="0" high-value="100" class="volume-slider" /><ui:Label name="music-value" text="65%" class="setting-value" /></ui:VisualElement>
+                    <ui:VisualElement class="setting-row"><ui:Label text="EFEK SUARA" class="setting-label" /><ui:Slider name="effects-volume" low-value="0" high-value="100" class="volume-slider" /><ui:Label name="effects-value" text="90%" class="setting-value" /></ui:VisualElement>
+                </ui:VisualElement>
+                <ui:VisualElement name="display-options" class="options-content">
+                    <ui:VisualElement class="setting-row"><ui:Label text="KUALITAS GRAFIS" class="setting-label" /><ui:DropdownField name="graphics-quality" class="setting-dropdown" /></ui:VisualElement>
+                    <ui:VisualElement class="setting-row"><ui:Label text="RESOLUSI" class="setting-label" /><ui:DropdownField name="screen-resolution" class="setting-dropdown" /></ui:VisualElement>
+                    <ui:VisualElement class="setting-row"><ui:Label text="LAYAR PENUH" class="setting-label" /><ui:Toggle name="fullscreen" text="Fullscreen" class="fullscreen-toggle" /></ui:VisualElement>
+                </ui:VisualElement>
+                <ui:Label name="options-status" class="options-status" />
+                <ui:VisualElement class="options-footer"><ui:Button name="options-back" text="ESC   Kembali" class="text-button" /><ui:Button name="options-save" text="SIMPAN" class="pit-button pit-primary pit-title save-button" /></ui:VisualElement>
+            </ui:VisualElement>
+            <ui:VisualElement name="confirm-page" class="overlay-paper confirm-paper">
+                <ui:Label name="confirm-title" text="ULANG BALAP?" class="overlay-title confirm-title pit-title" />
+                <ui:Label name="confirm-message" class="confirm-message" />
+                <ui:VisualElement class="confirm-buttons"><ui:Button name="confirm-no" text="BATAL" class="pit-button" /><ui:Button name="confirm-yes" text="YA, LANJUT" class="pit-button pit-primary" /></ui:VisualElement>
+            </ui:VisualElement>
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>

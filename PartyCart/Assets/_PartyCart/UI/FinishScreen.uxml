@@ -1,0 +1,21 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements">
+    <Style src="PitPassTheme.uss" />
+    <Style src="FinishScreen.uss" />
+    <ui:VisualElement name="finish-screen" class="finish-screen pit-pass" picking-mode="Ignore">
+        <ui:Label text="PARTY CART" class="brand pit-wordmark pit-title" picking-mode="Ignore" />
+        <ui:VisualElement class="winner-info" picking-mode="Ignore">
+            <ui:Label text="FINISH!" class="finish-title pit-title" />
+            <ui:Label name="winner-name" text="" class="winner-name pit-title" />
+            <ui:Label name="player-place" text="" class="player-place" />
+        </ui:VisualElement>
+        <ui:VisualElement class="race-stats" picking-mode="Ignore">
+            <ui:VisualElement class="stat"><ui:Label text="WAKTU KAMU" class="stat-label" /><ui:Label name="total-time" text="--:--.--" class="stat-value" /></ui:VisualElement>
+            <ui:VisualElement class="stat stat-best"><ui:Label text="LAP TERBAIK" class="stat-label" /><ui:Label name="best-lap" text="--:--.--" class="stat-value" /></ui:VisualElement>
+        </ui:VisualElement>
+        <ui:VisualElement name="results-paper" class="results-paper">
+            <ui:VisualElement class="paper-header" picking-mode="Ignore"><ui:Label text="CATATAN PANITIA" class="paper-kicker" /><ui:Label text="HASIL&#10;BALAP" class="paper-title pit-title" /><ui:Label name="lap-count" text="" class="lap-count" /></ui:VisualElement>
+            <ui:VisualElement class="ranking-panel"><ui:VisualElement class="column-head" picking-mode="Ignore"><ui:Label text="POS / PESERTA" class="name-heading" /><ui:Label text="WAKTU" class="time-heading" /></ui:VisualElement><ui:ScrollView name="ranking-list" class="ranking-list" horizontal-scroller-visibility="Hidden" vertical-scroller-visibility="Auto" /></ui:VisualElement>
+            <ui:VisualElement class="result-footer"><ui:Label name="race-status" text="" class="race-status" /><ui:Button name="replay-button" text="BALAP LAGI      ↗" class="pit-button pit-replay replay-button" /><ui:Button name="menu-button" text="MENU" class="pit-button menu-button" /></ui:VisualElement>
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>
